@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://02uiqp1atn6p"]
+
+[ext_resource type="Texture2D" uid="uid://cg1sksqpm5wqk" path="res://assets/block.png" id="1_8r6n6"]
+[ext_resource type="Script" uid="uid://c8d23wbf82naw" path="res://scenes/block/Block.cs" id="1_cgrg5"]
+[ext_resource type="Shader" uid="uid://bdh387cwk4mt8" path="res://scenes/block/block_hit.gdshader" id="2_4kun4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2tbfo"]
+shader = ExtResource("2_4kun4")
+shader_parameter/hit_flash_color = Vector4(1, 1, 1, 1)
+shader_parameter/hit_flash_on = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tbfo"]
+size = Vector2(64, 12)
+
+[sub_resource type="Animation" id="Animation_4kun4"]
+length = 0.26666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/hit_flash_on")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ojgcc"]
+resource_name = "hit"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/hit_flash_on")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1bw7o"]
+_data = {
+&"RESET": SubResource("Animation_4kun4"),
+&"hit": SubResource("Animation_ojgcc")
+}
+
+[node name="Block" type="StaticBody2D" unique_id=322411138]
+script = ExtResource("1_cgrg5")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=493993186]
+material = SubResource("ShaderMaterial_2tbfo")
+texture = ExtResource("1_8r6n6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2082848079]
+visible = false
+shape = SubResource("RectangleShape2D_2tbfo")
+
+[node name="HitFlashAnimation" type="AnimationPlayer" parent="." unique_id=1791993533]
+libraries/ = SubResource("AnimationLibrary_1bw7o")

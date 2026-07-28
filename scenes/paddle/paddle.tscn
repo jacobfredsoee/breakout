@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b27ejp5clllpq"]
+
+[ext_resource type="Texture2D" uid="uid://cg1sksqpm5wqk" path="res://assets/block.png" id="1_q5rgx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2sa55"]
+size = Vector2(64, 12)
+
+[node name="Paddle" type="AnimatableBody2D" unique_id=840666749]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=697391284]
+modulate = Color(0.45490196, 0.85490197, 0.45882353, 1)
+texture = ExtResource("1_q5rgx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1352649937]
+shape = SubResource("RectangleShape2D_2sa55")
