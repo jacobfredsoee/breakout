@@ -35,4 +35,11 @@ public partial class Block : StaticBody2D
 	{
 		QueueFree();
 	}
+
+	public void OnBodyEntered(Node2D body)
+	{
+		if (body is not Ball) return;
+		GD.Print("Block hit body: ", body.Name);
+		TakeHit();
+	}
 }

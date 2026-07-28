@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://b27ejp5clllpq"]
 
+[ext_resource type="Script" uid="uid://be07misjepbid" path="res://scenes/paddle/Paddle.cs" id="1_2sa55"]
 [ext_resource type="Texture2D" uid="uid://cg1sksqpm5wqk" path="res://assets/block.png" id="1_q5rgx"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2sa55"]
-size = Vector2(64, 12)
-
 [node name="Paddle" type="AnimatableBody2D" unique_id=840666749]
+sync_to_physics = false
+script = ExtResource("1_2sa55")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=697391284]
 modulate = Color(0.45490196, 0.85490197, 0.45882353, 1)
 texture = ExtResource("1_q5rgx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1352649937]
-shape = SubResource("RectangleShape2D_2sa55")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1354213649]
+polygon = PackedVector2Array(-30, -6, 30, -6, 33, 0, 30, 6, -30, 6, -33, 0)

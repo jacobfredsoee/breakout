@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://02uiqp1atn6p"]
 
-[ext_resource type="Texture2D" uid="uid://cg1sksqpm5wqk" path="res://assets/block.png" id="1_8r6n6"]
-[ext_resource type="Script" uid="uid://c8d23wbf82naw" path="res://scenes/block/Block.cs" id="1_cgrg5"]
-[ext_resource type="Shader" uid="uid://bdh387cwk4mt8" path="res://scenes/block/block_hit.gdshader" id="2_4kun4"]
+[ext_resource type="Script" uid="uid://c8d23wbf82naw" path="res://scenes/block/Block.cs" id="1_rfxuc"]
+[ext_resource type="Shader" uid="uid://bdh387cwk4mt8" path="res://scenes/block/block_hit.gdshader" id="2_66klm"]
+[ext_resource type="Texture2D" uid="uid://cg1sksqpm5wqk" path="res://assets/block.png" id="3_1y88q"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2tbfo"]
-shader = ExtResource("2_4kun4")
+shader = ExtResource("2_66klm")
 shader_parameter/hit_flash_color = Vector4(1, 1, 1, 1)
 shader_parameter/hit_flash_on = false
 
@@ -50,12 +50,15 @@ _data = {
 &"hit": SubResource("Animation_ojgcc")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e7mva"]
+size = Vector2(64, 12)
+
 [node name="Block" type="StaticBody2D" unique_id=322411138]
-script = ExtResource("1_cgrg5")
+script = ExtResource("1_rfxuc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=493993186]
 material = SubResource("ShaderMaterial_2tbfo")
-texture = ExtResource("1_8r6n6")
+texture = ExtResource("3_1y88q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2082848079]
 visible = false
@@ -63,3 +66,10 @@ shape = SubResource("RectangleShape2D_2tbfo")
 
 [node name="HitFlashAnimation" type="AnimationPlayer" parent="." unique_id=1791993533]
 libraries/ = SubResource("AnimationLibrary_1bw7o")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1700425745]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=337421279]
+shape = SubResource("RectangleShape2D_e7mva")
+
+[connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]

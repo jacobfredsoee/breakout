@@ -1,6 +1,23 @@
 [gd_scene format=3 uid="uid://155xx7s6y6ta"]
 
 [ext_resource type="Script" uid="uid://dpinhw50ukmts" path="res://scenes/main/Main.cs" id="1_hyk8p"]
+[ext_resource type="PackedScene" uid="uid://duc7fboo8raui" path="res://scenes/ball/ball.tscn" id="2_iuonh"]
+[ext_resource type="PackedScene" uid="uid://b27ejp5clllpq" path="res://scenes/paddle/paddle.tscn" id="2_k2fmo"]
 
 [node name="Main" type="Node" unique_id=115445088]
 script = ExtResource("1_hyk8p")
+
+[node name="ServeTimer" type="Timer" parent="." unique_id=1511358093]
+wait_time = 2.0
+one_shot = true
+
+[node name="Ball" parent="." unique_id=548911108 instance=ExtResource("2_iuonh")]
+position = Vector2(320, 300)
+gravity_scale = 0.0
+continuous_cd = 1
+linear_damp_mode = 1
+
+[node name="Paddle" parent="." unique_id=840666749 instance=ExtResource("2_k2fmo")]
+position = Vector2(320, 340)
+
+[connection signal="timeout" from="ServeTimer" to="." method="OnServeTimerTimeout"]
