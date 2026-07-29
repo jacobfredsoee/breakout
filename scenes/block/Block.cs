@@ -4,42 +4,40 @@ public partial class Block : StaticBody2D
 {
 	[Export]
 	public int Health { get; set; } = 1;
+	public AnimationPlayer _animationPlayer;
+	private bool _dying = false;
 
 	public void Initialize(Vector2 position, Color color, int health = 1)
 	{
 		Position = position;
 		Modulate = color;
 		Health = health;
-	}
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		_animationPlayer = GetNode<AnimationPlayer>("HitFlashAnimation");
 	}
 
 	public void TakeHit()
 	{
+		if (_dying) return;
+
 		Health--;
+		_animationPlayer.Play("hit");
 		if (Health <= 0)
 		{
 			Die();
 		}
 	}
 
-	public void Die()
+	public async void Die()
 	{
+		_dying = true;
+		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		await ToSignal(_animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
 		QueueFree();
 	}
 
 	public void OnBodyEntered(Node2D body)
 	{
 		if (body is not Ball) return;
-		GD.Print("Block hit body: ", body.Name);
 		TakeHit();
 	}
 }

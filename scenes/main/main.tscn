@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dpinhw50ukmts" path="res://scenes/main/Main.cs" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://duc7fboo8raui" path="res://scenes/ball/ball.tscn" id="2_iuonh"]
 [ext_resource type="PackedScene" uid="uid://b27ejp5clllpq" path="res://scenes/paddle/paddle.tscn" id="2_k2fmo"]
+[ext_resource type="PackedScene" uid="uid://dooyc513pd6y6" path="res://scenes/arena/arena.tscn" id="4_l3cfh"]
 
 [node name="Main" type="Node" unique_id=115445088]
 script = ExtResource("1_hyk8p")
@@ -15,9 +16,10 @@ one_shot = true
 position = Vector2(320, 300)
 gravity_scale = 0.0
 continuous_cd = 1
-linear_damp_mode = 1
 
 [node name="Paddle" parent="." unique_id=840666749 instance=ExtResource("2_k2fmo")]
 position = Vector2(320, 340)
+
+[node name="Arena" parent="." unique_id=251293100 instance=ExtResource("4_l3cfh")]
 
 [connection signal="timeout" from="ServeTimer" to="." method="OnServeTimerTimeout"]

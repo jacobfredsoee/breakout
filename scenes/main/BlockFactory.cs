@@ -23,7 +23,7 @@ public static class BlockFactory
     // Creates a horizontal row of `count` blocks centered on `viewportWidth`, with `gap`
     // pixels between each block (and therefore equal margins on both sides). Blocks are
     // returned positioned but not added to the tree; the caller owns parenting.
-    public static List<Block> CreateBlockLine(int count, BlockColor color, float gap, float viewportWidth, float y)
+    public static List<Block> CreateBlockLine(int count, BlockColor color, int health, float gap, float viewportWidth, float y)
     {
         List<Block> blocks = new(count);
         if (count <= 0)
@@ -38,7 +38,7 @@ public static class BlockFactory
         for (int i = 0; i < count; i++)
         {
             float x = firstCenterX + i * step;
-            blocks.Add(CreateBlock(new Vector2(x, y), color));
+            blocks.Add(CreateBlock(new Vector2(x, y), color, health));
         }
 
         return blocks;

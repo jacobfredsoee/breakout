@@ -25,15 +25,15 @@ public partial class Main : Node
 	{
 		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
 		float rowSpacing = Settings.BlockGapVertical + Settings.BlockHeight;
-		(BlockColor color, int rows)[] layout = [(BlockColor.Red, 4), (BlockColor.Blue, 4), (BlockColor.Yellow, 4)];
+		(BlockColor color, int rows, int health)[] layout = [(BlockColor.Red, 4, 2), (BlockColor.Blue, 4, 1), (BlockColor.Yellow, 4, 1)];
 
 		List<Block> blocks = [];
 		float y = Settings.BlockRowY;
-		foreach ((BlockColor color, int rows) in layout)
+		foreach ((BlockColor color, int rows, int health) in layout)
 		{
 			for (int row = 0; row < rows; row++)
 			{
-				blocks.AddRange(BlockFactory.CreateBlockLine(Settings.BlockCount, color, Settings.BlockGapHorizontal, viewportWidth, y));
+				blocks.AddRange(BlockFactory.CreateBlockLine(Settings.BlockCount, color, health, Settings.BlockGapHorizontal, viewportWidth, y));
 				y += rowSpacing;
 			}
 		}
