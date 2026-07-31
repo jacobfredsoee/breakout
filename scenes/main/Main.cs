@@ -4,15 +4,26 @@ using System.Collections.Generic;
 
 public partial class Main : Node
 {
+	[Signal]
+	public delegate void GameLostEventHandler();
 	private Ball _ball;
 	private Timer _serveTimer;
+	private int _score = 0;
+	private HUD _hud;
+	private Arena _arena;
+	private int remainingBlocks = 0;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_ball = GetNode<Ball>("Ball");
 		_serveTimer = GetNode<Timer>("ServeTimer");
+		_hud = GetNode<HUD>("HUD");
+		_arena = GetNode<Arena>("Arena");
+		_arena.BallLost += OnBallLost;
+		_hud.GameLost += OnGameLost;
 		SpawnBlocks();
 		SpawnBall();
+		ResetBall();
 	}
 
 	private void SpawnBall()
@@ -40,13 +51,46 @@ public partial class Main : Node
 
 		foreach (Block block in blocks)
 		{
+			block.Destroyed += _hud.AddScore;
+			block.Destroyed += CheckForWin;
 			AddChild(block);
 		}
+		remainingBlocks = blocks.Count;
+	}
+
+	public void OnGameLost()
+	{
+		_ball.QueueFree();
+		_serveTimer.Stop();
+	}
+
+	public void CheckForWin(int points)
+	{
+		remainingBlocks--;
+		if (remainingBlocks > 0)
+		{
+			return;
+		}
+		_ball.QueueFree();
+		_serveTimer.Stop();
+		_hud.DisplayGameWon();
+	}
+
+	public void OnBallLost()
+	{
+		_hud.LoseLife();
+		ResetBall();
+	}
+
+	public void ResetBall()
+	{
+		_ball.Position = new Vector2(GetViewport().GetVisibleRect().Size.X / 2, 300);
+		_ball.LinearVelocity = Vector2.Zero;
+		_serveTimer.Start();
 	}
 
 	public void OnServeTimerTimeout()
 	{
-		GD.Print("Serve");
 		float straightUp = -Mathf.Pi / 2;
 		float halfCone = Mathf.DegToRad(45f) / 2f;
 		float direction = straightUp + (float)GD.RandRange(-halfCone, halfCone);

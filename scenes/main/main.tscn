@@ -4,9 +4,15 @@
 [ext_resource type="PackedScene" uid="uid://duc7fboo8raui" path="res://scenes/ball/ball.tscn" id="2_iuonh"]
 [ext_resource type="PackedScene" uid="uid://b27ejp5clllpq" path="res://scenes/paddle/paddle.tscn" id="2_k2fmo"]
 [ext_resource type="PackedScene" uid="uid://dooyc513pd6y6" path="res://scenes/arena/arena.tscn" id="4_l3cfh"]
+[ext_resource type="PackedScene" uid="uid://obxmq5wiupya" path="res://ui/hud.tscn" id="5_6q06x"]
 
 [node name="Main" type="Node" unique_id=115445088]
 script = ExtResource("1_hyk8p")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1286742686]
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 1)
 
 [node name="ServeTimer" type="Timer" parent="." unique_id=1511358093]
 wait_time = 2.0
@@ -21,5 +27,8 @@ continuous_cd = 1
 position = Vector2(320, 340)
 
 [node name="Arena" parent="." unique_id=251293100 instance=ExtResource("4_l3cfh")]
+position = Vector2(0, 32)
+
+[node name="HUD" parent="." unique_id=675546456 instance=ExtResource("5_6q06x")]
 
 [connection signal="timeout" from="ServeTimer" to="." method="OnServeTimerTimeout"]

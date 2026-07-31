@@ -12,8 +12,6 @@ public partial class Paddle : AnimatableBody2D
 	{
 		_screenSize = GetViewportRect().Size;
 		_sprite = GetNode<Sprite2D>("Sprite2D");
-		GD.Print(_sprite.Texture.GetWidth());
-		GD.Print(_sprite.Texture.GetHeight());
 	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)

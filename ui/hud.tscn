@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://obxmq5wiupya"]
+
+[ext_resource type="Script" uid="uid://b5hmxff6fqmd6" path="res://ui/HUD.cs" id="1_546lt"]
+[ext_resource type="FontFile" uid="uid://bns3ats2213eu" path="res://assets/fonts/Xolonium-Regular.ttf" id="1_rbyyf"]
+[ext_resource type="PackedScene" uid="uid://cugg4mdckk0nq" path="res://ui/health_bar.tscn" id="2_276te"]
+
+[node name="HUD" type="CanvasLayer" unique_id=675546456]
+script = ExtResource("1_546lt")
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1446785989]
+offset_left = 572.0
+offset_top = -7.0
+offset_right = 612.0
+offset_bottom = 38.0
+theme_override_fonts/font = ExtResource("1_rbyyf")
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthBar" parent="." unique_id=505723269 instance=ExtResource("2_276te")]
+position = Vector2(16, 11)
+
+[node name="GameWonLabel" type="Label" parent="." unique_id=829671476]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = -22.5
+offset_right = 59.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_rbyyf")
+theme_override_font_sizes/font_size = 24
+text = "Winner!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameLostLabel" type="Label" parent="." unique_id=1226558648]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -73.5
+offset_top = -96.0
+offset_right = 73.5
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_rbyyf")
+theme_override_font_sizes/font_size = 24
+text = "Game Over!"
+horizontal_alignment = 1
+vertical_alignment = 1
