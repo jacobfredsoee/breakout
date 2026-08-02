@@ -7,7 +7,7 @@ public partial class Block : StaticBody2D
 	public delegate void DestroyedEventHandler(int points);
 	[Export]
 	public int Health { get; set; } = 1;
-	public AnimationPlayer _animationPlayer;
+	private AnimationPlayer _animationPlayer;
 	private bool _dying = false;
 	private int _points;
 
@@ -24,7 +24,7 @@ public partial class Block : StaticBody2D
 		_points = health;
 	}
 
-	public void TakeHit()
+	private void TakeHit()
 	{
 		if (_dying) return;
 
@@ -36,7 +36,7 @@ public partial class Block : StaticBody2D
 		}
 	}
 
-	public async void Die()
+	private async void Die()
 	{
 		_dying = true;
 		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);

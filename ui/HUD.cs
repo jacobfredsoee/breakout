@@ -24,7 +24,7 @@ public partial class HUD : CanvasLayer
 
 		Reset();
 	}
-	public void OnGameLost()
+	private void OnGameLost()
 	{
 		EmitSignal(SignalName.GameLost);
 		_gameLostLabel.Visible = true;
@@ -54,7 +54,7 @@ public partial class HUD : CanvasLayer
 		EmitSignal(SignalName.RestartGame);
 	}
 
-	public void Reset()
+	private void Reset()
 	{
 		_healthBar.Reset();
 		_score = 0;

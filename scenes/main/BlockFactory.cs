@@ -12,7 +12,7 @@ public static class BlockFactory
     private const float BlockWidth = 64f;
 
     private static readonly PackedScene _blockScene = GD.Load<PackedScene>("uid://02uiqp1atn6p");
-    public static Block CreateBlock(Vector2 position, BlockColor color, int health = 1)
+    private static Block CreateBlock(Vector2 position, BlockColor color, int health = 1)
     {
         Block block = _blockScene.Instantiate<Block>();
         block.Initialize(position, GetColor(color), health);

@@ -62,7 +62,7 @@ public partial class Main : Node
 
 	private Vector2 BallStart => new(GetViewport().GetVisibleRect().Size.X / 2, 300f);
 
-	public void OnGameLost()
+	private void OnGameLost()
 	{
 		_ball.Park(BallStart);
 		_ball.Visible = false;
@@ -70,7 +70,7 @@ public partial class Main : Node
 		_gameOver = true;
 	}
 
-	public void CheckForWin()
+	private void CheckForWin()
 	{
 		_remainingBlocks--;
 		if (_remainingBlocks > 0)
@@ -84,14 +84,14 @@ public partial class Main : Node
 		_hud.DisplayGameWon();
 	}
 
-	public void OnBallLost()
+	private void OnBallLost()
 	{
 		_hud.LoseLife();
 		if (_gameOver) return;
 		ResetBall();
 	}
 
-	public void ResetBall()
+	private void ResetBall()
 	{
 		_ball.Visible = true;
 		_ball.Park(BallStart);
@@ -106,7 +106,7 @@ public partial class Main : Node
 		_ball.Launch(Vector2.FromAngle(direction));
 	}
 
-	public void RestartGame()
+	private void RestartGame()
 	{
 		RemoveAllBlocks();
 		SpawnBlocks();
