@@ -11,13 +11,17 @@ public partial class Block : StaticBody2D
 	private bool _dying = false;
 	private int _points;
 
+	public override void _Ready()
+	{
+		_animationPlayer = GetNode<AnimationPlayer>("HitFlashAnimation");
+	}
+
 	public void Initialize(Vector2 position, Color color, int health = 1)
 	{
 		Position = position;
 		Modulate = color;
 		Health = health;
 		_points = health;
-		_animationPlayer = GetNode<AnimationPlayer>("HitFlashAnimation");
 	}
 
 	public void TakeHit()

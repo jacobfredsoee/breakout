@@ -1,18 +1,15 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 public partial class Main : Node
 {
-	[Signal]
-	public delegate void GameLostEventHandler();
 	private Ball _ball;
 	private Timer _serveTimer;
-	private int _score = 0;
 	private HUD _hud;
 	private Arena _arena;
-	private int remainingBlocks = 0;
-	// Called when the node enters the scene tree for the first time.
+	private int _remainingBlocks = 0;
+	private bool _gameOver = false;
+
 	public override void _Ready()
 	{
 		_ball = GetNode<Ball>("Ball");
@@ -21,15 +18,9 @@ public partial class Main : Node
 		_arena = GetNode<Arena>("Arena");
 		_arena.BallLost += OnBallLost;
 		_hud.GameLost += OnGameLost;
+		_hud.RestartGame += RestartGame;
 		SpawnBlocks();
-		SpawnBall();
 		ResetBall();
-	}
-
-	private void SpawnBall()
-	{
-		_ball.Position = new Vector2(GetViewport().GetVisibleRect().Size.X / 2, 300);
-		_serveTimer.Start();
 	}
 
 	private void SpawnBlocks()
@@ -52,26 +43,43 @@ public partial class Main : Node
 		foreach (Block block in blocks)
 		{
 			block.Destroyed += _hud.AddScore;
-			block.Destroyed += CheckForWin;
+			block.Destroyed += _ => CheckForWin();
 			AddChild(block);
 		}
-		remainingBlocks = blocks.Count;
+		_remainingBlocks = blocks.Count;
 	}
+
+	private void RemoveAllBlocks()
+	{
+		foreach (Node node in GetChildren())
+		{
+			if (node is Block)
+			{
+				node.QueueFree();
+			}
+		}
+	}
+
+	private Vector2 BallStart => new(GetViewport().GetVisibleRect().Size.X / 2, 300f);
 
 	public void OnGameLost()
 	{
-		_ball.QueueFree();
+		_ball.Park(BallStart);
+		_ball.Visible = false;
 		_serveTimer.Stop();
+		_gameOver = true;
 	}
 
-	public void CheckForWin(int points)
+	public void CheckForWin()
 	{
-		remainingBlocks--;
-		if (remainingBlocks > 0)
+		_remainingBlocks--;
+		if (_remainingBlocks > 0)
 		{
 			return;
 		}
-		_ball.QueueFree();
+		_gameOver = true;
+		_ball.Park(BallStart);
+		_ball.Visible = false;
 		_serveTimer.Stop();
 		_hud.DisplayGameWon();
 	}
@@ -79,13 +87,14 @@ public partial class Main : Node
 	public void OnBallLost()
 	{
 		_hud.LoseLife();
+		if (_gameOver) return;
 		ResetBall();
 	}
 
 	public void ResetBall()
 	{
-		_ball.Position = new Vector2(GetViewport().GetVisibleRect().Size.X / 2, 300);
-		_ball.LinearVelocity = Vector2.Zero;
+		_ball.Visible = true;
+		_ball.Park(BallStart);
 		_serveTimer.Start();
 	}
 
@@ -94,6 +103,14 @@ public partial class Main : Node
 		float straightUp = -Mathf.Pi / 2;
 		float halfCone = Mathf.DegToRad(45f) / 2f;
 		float direction = straightUp + (float)GD.RandRange(-halfCone, halfCone);
-		_ball.LinearVelocity = Vector2.FromAngle(direction) * _ball.Speed;
+		_ball.Launch(Vector2.FromAngle(direction));
+	}
+
+	public void RestartGame()
+	{
+		RemoveAllBlocks();
+		SpawnBlocks();
+		ResetBall();
+		_gameOver = false;
 	}
 }

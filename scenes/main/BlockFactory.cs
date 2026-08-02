@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public enum BlockColor
 {
     Red,
-    Green,
     Blue,
     Yellow,
 }
@@ -50,8 +49,6 @@ public static class BlockFactory
         {
             case BlockColor.Red:
                 return new Color(1, 0, 0);
-            case BlockColor.Green:
-                return new Color(0, 1, 0);
             case BlockColor.Blue:
                 return new Color(0, 0, 1);
             case BlockColor.Yellow:

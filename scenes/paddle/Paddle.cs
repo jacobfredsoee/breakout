@@ -4,16 +4,16 @@ public partial class Paddle : AnimatableBody2D
 {
 	private Vector2 _screenSize;
 	private int _borderInset = 5;
+	[Export]
 	public float Speed = 400f;
 	private Sprite2D _sprite;
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_screenSize = GetViewportRect().Size;
 		_sprite = GetNode<Sprite2D>("Sprite2D");
 	}
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+
 	public override void _PhysicsProcess(double delta)
 	{
 		var direction = Input.GetAxis("move_left", "move_right");

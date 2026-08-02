@@ -58,3 +58,22 @@ theme_override_font_sizes/font_size = 24
 text = "Game Over!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="RestartGameButton" type="Button" parent="." unique_id=1100185595]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -71.0
+offset_top = -61.0
+offset_right = 71.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_rbyyf")
+text = "Start new game"
+
+[connection signal="pressed" from="RestartGameButton" to="." method="OnRestartGameButtonPressed"]
